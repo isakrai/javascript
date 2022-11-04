@@ -1,0 +1,28 @@
+   <!DOCTYPE html>
+    <head>
+    First name: <input type="text" id="firstname"><br> 
+   
+    <script type="text/javascript">
+    var x= [];
+   
+    function changeText2(){
+        var firstname = document.getElementById('firstname').value;
+var entry = document.createElement('li');
+entry.appendChild(document.createTextNode(firstname));
+list.appendChild(entry);
+    }
+    </script>
+   
+    <p>Your first name is: <b id='boldStuff2'></b> </p> 
+    <p> Other people's names: </p>
+    
+    <ol>
+        <li id = "demo"> </li> 
+    </ol>
+   
+    <input type='button' onclick='changeText2()'   value='Submit'/> 
+   
+    </head>
+    <body>
+    </body>
+    </html>

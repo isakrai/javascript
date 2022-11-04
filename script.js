@@ -1,30 +1,65 @@
-document.querySelector('#push').onclick = function(){
-    if(document.querySelector('#newtask input').value.length < 3){
-        alert("Lisää vähintään 3 merkkiä!")
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function () {
+    var div = this.parentElement;
+    div.style.display = "none";
+  };
+}
+
+var list = document.querySelector("ul");
+list.addEventListener(
+  "click",
+  function (ev) {
+    if (ev.target.tagName === "LI") {
+      ev.target.classList.toggle("checked");
     }
-    else{
-        document.querySelector('#tasks').innerHTML += `
-            <div class="task">
-                <span id="taskname">
-                    ${document.querySelector('#newtask input').value}
-                </span>
-                <button class="delete">
-                    <i class="far fa-trash-alt"></i>
-                </button>
-            </div>
-        `;
-        var current_tasks = document.querySelectorAll(".delete");
-        for(var i=0; i<current_tasks.length; i++){
-            current_tasks[i].onclick = function(){
-                this.parentNode.remove();
-            }
-        }
-        var tasks = document.querySelectorAll(".task");
-        for(var i=0; i<tasks.length; i++){
-            tasks[i].onclick = function(){
-                this.classList.toggle('completed');
-            }
-        }
-        document.querySelector("#newtask input").value = "";
-    }
+  },
+  false
+);
+
+function uusiElementti() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("inputField").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === "") {
+    alert("Kirjoita tekstikenttään jotain!");
+    inputField.style.border = "3px solid red";
+  } else {
+    document.getElementById("myUL").appendChild(li);
+    inputField.style.border = "none";
+    tallenna();
+
+  }
+  document.getElementById("inputField").value = "";
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("x");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function () {
+      var div = this.parentElement;
+      div.style.display = "none";
+      var deleteText = this.parentElement.innerText;
+      var cleanedText = deleteText.slice(0, -1);
+      var list = JSON.parse(localStorage.getItem("tehtävät"));
+      for (i = 0; i < list.length; i++) {
+          if (list[i] == cleanedText) {
+          list.splice(i, 1);
+          }
+      }
+      localStorage.setItem("tehtävät", JSON.stringify(list));
+    };
+  }
+}
+
+function tallenna() {
+  console.log();
+  var inputValue = document.getElementById("inputField").value;
+  let tallennus = JSON.parse(localStorage.getItem("tehtävät")) || [];
+  tallennus.push(inputValue);
+  localStorage.setItem("tehtävät", JSON.stringify(tallennus));
 }
